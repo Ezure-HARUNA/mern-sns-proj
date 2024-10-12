@@ -24,28 +24,19 @@ router.post("/register", async (req, res) => {
   }
 });
 
-//login
 router.post("/login", async (req, res) => {
   try {
-    const user = await User.findOne({ email: req.body.email });
-    if (!user) return res.status(404).send("user not found");
+    const user = await User.findOne({email: req.body.email})
+    if (!user) return res.status(404).send("ユーザーが見つかりません");
+      const vailedPassword = req.body.password === user.password;
 
-    // const vailedPassword = await bcrypt.compare(
-    //   req.body.password,
-    //   user.password,
-    //   (err, res) => {
-    //     console.log(res);
-    //   }
-    // );
+      if (!vailedPassword)
+        return res.status(400).json("パスワードが間違っています");
 
-    const vailedPassword = req.body.password === user.password;
-
-    if (!vailedPassword) return res.status(400).json("password is not correct");
-
-    return res.status(200).json(user);
+      return res.status(200).json(user);
   } catch (err) {
     return res.status(500).json(err);
   }
-});
+})
 
 module.exports = router;
