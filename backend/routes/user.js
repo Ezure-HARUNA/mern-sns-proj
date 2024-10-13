@@ -5,7 +5,7 @@ const User = require("../models/User");
 //   res.send("user router");
 // });
 
-//update user
+//ユーザ情報の更新
 router.put("/:id", async (req, res) => {
   if (req.body.userId === req.params.id || req.body.isAdmin) {
     // if (req.body.password) {
@@ -20,13 +20,13 @@ router.put("/:id", async (req, res) => {
       const user = await User.findByIdAndUpdate(req.params.id, {
         $set: req.body,
       });
-      res.status(200).json("account has been updated");
+      res.status(200).json("ユーザ情報が更新されました");
     } catch (err) {
       console.log(err);
       return res.status(500).json(err);
     }
   } else {
-    return res.status(403).json("you can update only your account");
+    return res.status(403).json("あなたは五ゾシンのアカウント時のみ情報を更新できます");
   }
 });
 
