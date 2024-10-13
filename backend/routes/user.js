@@ -48,15 +48,16 @@ router.delete("/:id", async (req, res) => {
 });
 
 //get a user
-// router.get("/:id", async (req, res) => {
-//   try {
-//     const user = await User.findById(req.params.id);
-//     const { passward, updateAt, ...other } = user._doc;
-//     res.status(200).json(other);
-//   } catch (err) {
-//     res.status(500).json(err);
-//   }
-// });
+router.get("/:id", async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    //passwordとupdatedAtを除いたユーザ情報を表示する
+    const { password, updatedAt, ...other } = user._doc;
+    res.status(200).json(other);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 //クエリでuser情報を取得
 router.get("/", async (req, res) => {
