@@ -26,7 +26,7 @@ router.put("/:id", async (req, res) => {
       return res.status(500).json(err);
     }
   } else {
-    return res.status(403).json("あなたは五ゾシンのアカウント時のみ情報を更新できます");
+    return res.status(403).json("あなたはご自身のアカウント時のみ情報を更新できます");
   }
 });
 
@@ -35,13 +35,15 @@ router.delete("/:id", async (req, res) => {
   if (req.body.userId === req.params.id || req.body.isAdmin) {
     try {
       const user = await User.findByIdAndDelete(req.params.id);
-      res.status(200).json("account has been deleted");
+      res.status(200).json("アカウントが削除されました");
     } catch (err) {
       console.log(err);
       return res.status(500).json(err);
     }
   } else {
-    return res.status(403).json("you can delete only your account");
+    return res
+      .status(403)
+      .json("あなたはご自身のアカウント時のみアカウントを削除できます");
   }
 });
 
